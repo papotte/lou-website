@@ -2,3 +2,22 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+@import "fonts";
+
+.font-allura {
+  font-family: 'Allura', cursive, serif;
+}
+
+.font-moontime {
+  font-family: 'MoontimeRegular', cursive, serif;
+}
+
+html {
+  font-family: 'OpenSansRegular', sans-serif;
+  font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'OpenSansCondensed', sans-serif;
+  font-weight: bold;
+}
