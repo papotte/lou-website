@@ -1,10 +1,10 @@
 /* font-family: "MoontimeRegular"; */
 @font-face {
   font-family: "MoontimeRegular";
-  src: url("fonts/MoonTime-Regular.eot");
-  src: url("fonts/MoonTime-Regular.eot?#iefix")format("embedded-opentype"),
-  url("fonts/MoonTime-Regular.otf") format("otf"),
-  url("fonts/MoonTime-Regular.ttf") format("truetype");
+  src: url("~assets/fonts/MoonTime-Regular.eot");
+  src: url("~assets/fonts/MoonTime-Regular.eot?#iefix")format("embedded-opentype"),
+  url("~assets/fonts/MoonTime-Regular.woff") format("woff"),
+  url("~assets/fonts/MoonTime-Regular.ttf") format("truetype");
   font-style: normal;
   font-weight: normal;
 }

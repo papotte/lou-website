@@ -78,7 +78,11 @@ export default {
    */
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     theme: {
+      options: {
+        customProperties: true
+      },
       themes: {
         light: {
           primary: '#A25D7C',
@@ -109,6 +113,7 @@ export default {
      ** You can extend webpack config here
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    extend(config, ctx) {}
+    extend(config, ctx) {
+    }
   }
 }

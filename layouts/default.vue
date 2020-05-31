@@ -1,64 +1,47 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+    <v-app-bar fixed color="white" elevate-on-scroll app class="px-10">
+      <nuxt-link
+        :to="{ name: 'index' }"
+        aria-label="Página de inicio"
+        class="d-none d-sm-flex align-center text--primary"
+        style="text-decoration: none;"
+        title="Página de inicio"
+      >
+        <v-img
+          src="/logo.svg"
+          alt="Logo"
+          class="shrink mr-2"
+          contain
+          transition="scale-transition"
+          width="40"
+        />
+        <v-sheet class="h1 mr-0 mr-md-4" color="transparent">
+          <h1>{{ title }}</h1>
+        </v-sheet>
+      </nuxt-link>
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <v-toolbar-items>
+        <v-btn
+          v-for="(link, index) in links"
+          :key="index"
+          nuxt
+          active-class="primary--text"
+          min-width="48"
+          text
+          :ripple="false"
+          :to="link.to"
+        >
+          <h3 class="text-capitalize ">{{ link.title }}</h3>
+        </v-btn>
+      </v-toolbar-items>
     </v-app-bar>
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
+    <v-footer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -71,23 +54,41 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      links: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Inicio',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          title: 'Sobre mí',
+          to: '/about'
+        },
+        {
+          title: 'Productos',
+          to: '/products'
+        },
+        {
+          title: 'Contacto',
+          to: '/contact'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Lou De La Hoz'
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.v-btn {
+  &:before {
+    background-color: transparent;
+  }
+
+  &:hover {
+    opacity: 0.8;
+    color: var(--v-primary-base) !important;
+  }
+}
+</style>
