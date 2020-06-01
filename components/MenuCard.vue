@@ -2,6 +2,7 @@
   <v-col cols="12" md="4" class="pa-0 mb-3">
     <v-hover v-slot:default="{ hover }">
       <v-img
+        max-height="400px"
         :class="hover ? 'has-overlay' : ''"
         :src="getImage(product.fields.image[0])"
         @click="hover = !hover"
