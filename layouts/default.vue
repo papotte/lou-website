@@ -25,7 +25,6 @@
         <v-btn
           v-for="(link, index) in nav"
           :key="index"
-          nuxt
           min-width="48"
           text
           :ripple="false"
@@ -100,19 +99,19 @@ export default {
       nav: [
         {
           title: 'Inicio',
-          to: '/'
+          to: '/#start'
         },
         {
           title: 'Sobre mí',
-          to: '/about'
+          to: '/#about'
         },
         {
           title: 'Productos',
-          to: '/products'
+          to: '/#products'
         },
         {
           title: 'Contacto',
-          to: '/contact'
+          to: '/#contact'
         }
       ],
       leftDrawer: false,

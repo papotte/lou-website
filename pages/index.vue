@@ -1,6 +1,6 @@
 <template>
   <v-col class="pa-0" cols="12">
-    <v-col cols="12" class="pa-0">
+    <v-col id="start" cols="12" class="pa-0">
       <v-img
         :aspect-ratio="16 / 9"
         max-height="500px"
@@ -20,7 +20,7 @@
         </v-row>
       </v-img>
     </v-col>
-    <v-row>
+    <v-row id="about">
       <v-col tile class="pa-0" cols="12" md="6">
         <v-img height="500" src="/images/photo.jpg" />
       </v-col>
@@ -38,7 +38,7 @@
       </v-col>
     </v-row>
     <v-container>
-      <v-row class="mt-11">
+      <v-row id="products" class="mt-11">
         <v-col
           v-for="card in categories"
           :key="card.sys.id"
@@ -65,7 +65,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row class="mt-11">
+      <v-row id="contact" class="mt-11">
         <v-col cols="10" offset="1">
           <v-card flat>
             <v-card-title class="display-2 primary--text">
