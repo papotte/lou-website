@@ -1,24 +1,28 @@
-import {
-  Module,
-  Vue,
-  VuexAction,
-  VuexModule,
-  VuexMutation
-} from 'nuxt-property-decorator'
+import { getModule, Getter, Module, Vue, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-decorator'
 import Vuex from 'vuex'
 import client from '~/plugins/contentful'
 
+interface StoreType {
+  contentful: ContentfulStore
+}
+
 Vue.use(Vuex)
-const store = new Vuex.Store({})
+const store = new Vuex.Store<StoreType>({})
 
 @Module({
-  name: 'ContentfulStore',
+  name: 'contentful',
   dynamic: true,
+  namespaced: true,
   store
 })
 export default class ContentfulStore extends VuexModule {
   public products: any = null
   public categories: any = null
+  public menus: any = null
+
+  get allMenus() {
+    return this.menus
+  }
 
   get allProducts() {
     return this.products
@@ -29,15 +33,37 @@ export default class ContentfulStore extends VuexModule {
   }
 
   @VuexMutation
+  updateMenu(products: any) {
+    this.menus = products
+  }
+
+  @VuexMutation
   updateProducts(products: any) {
-    console.log(products)
     this.products = products
   }
 
   @VuexMutation
   updateCategories(categories: any) {
-    console.log(categories)
     this.categories = categories
+  }
+
+  @VuexAction
+  async getMenu() {
+    try {
+      if (!client) return
+      const response = await client.getEntries({
+        content_type: 'product',
+        'fields.category.sys.contentType.sys.id': 'category',
+        'fields.category.fields.slug[match]': 'menu',
+        order: '-sys.createdAt'
+      })
+      console.log(response.items[0].fields)
+      if (response.items.length > 0) {
+        this.updateMenu(response.items)
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   @VuexAction
@@ -45,7 +71,8 @@ export default class ContentfulStore extends VuexModule {
     try {
       if (!client) return
       const response = await client.getEntries({
-        content_type: 'product'
+        content_type: 'product',
+        order: '-sys.createdAt'
       })
       if (response.items.length > 0) {
         this.updateProducts(response.items)
@@ -60,7 +87,8 @@ export default class ContentfulStore extends VuexModule {
     try {
       if (!client) return
       const response = await client.getEntries({
-        content_type: 'category'
+        content_type: 'category',
+        order: 'fields.order'
       })
       if (response.items.length > 0) {
         this.updateCategories(response.items)
@@ -70,3 +98,5 @@ export default class ContentfulStore extends VuexModule {
     }
   }
 }
+
+export const ContentfulModule = getModule(ContentfulStore)

@@ -31,7 +31,7 @@
           :ripple="false"
           :to="link.to"
         >
-          <h6 class="text-capitalize">{{ link.title }}</h6>
+          <h6 class="text-none">{{ link.title }}</h6>
         </v-btn>
       </v-toolbar-items>
       <v-app-bar-nav-icon
@@ -41,9 +41,7 @@
       ></v-app-bar-nav-icon>
     </v-app-bar>
     <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-content>
     <v-navigation-drawer v-model="leftDrawer" :right="true" temporary fixed>
       <v-list>

@@ -3,14 +3,15 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+const pageName = 'Lou De La Hoz'
 export default {
   mode: 'universal',
   /*
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s - ' + pageName,
+    title: pageName,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -120,6 +121,7 @@ export default {
      ** You can extend webpack config here
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    extend(config, ctx) {}
+    extend(config, ctx) {
+    }
   }
 }
