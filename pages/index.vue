@@ -1,24 +1,26 @@
 <template>
   <v-col class="pa-0" cols="12">
     <v-col cols="12" class="pa-0">
-      <v-img
-        :aspect-ratio="16 / 9"
-        max-height="500px"
-        src="/images/hero-banner.jpg"
-      >
-        <v-row align="start" class="mt-md-10 mt-sm-4 pa-2 fill-height">
-          <v-col offset="1" cols="12" sm="3">
-            <h3>Bienvenido a mi página</h3>
-            <v-btn
-              nuxt
-              color="secondary"
-              class="mt-4 text-none font-weight-bold"
-            >
-              Hacer un pedido
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-img>
+      <client-only>
+        <v-img
+          :aspect-ratio="16 / 9"
+          max-height="500px"
+          src="/images/hero-banner.jpg"
+        >
+          <v-row align="start" class="mt-md-10 mt-sm-4 pa-2 fill-height">
+            <v-col offset="1" cols="12" sm="3">
+              <h3>Bienvenido a mi página</h3>
+              <v-btn
+                nuxt
+                color="secondary"
+                class="mt-4 text-none font-weight-bold"
+              >
+                Hacer un pedido
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-img>
+      </client-only>
     </v-col>
     <v-row>
       <v-col tile class="pa-0" cols="12" md="6">
@@ -108,7 +110,6 @@
                 <v-textarea
                   outlined
                   label="Mensaje"
-                  type="text"
                   name="mensaje"
                   :rules="[(v) => !!v || 'Este campo no puede estar vacío']"
                   auto-grow
