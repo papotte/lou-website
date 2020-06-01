@@ -1,26 +1,24 @@
 <template>
   <v-col class="pa-0" cols="12">
     <v-col cols="12" class="pa-0">
-      <client-only>
-        <v-img
-          :aspect-ratio="16 / 9"
-          max-height="500px"
-          src="/images/hero-banner.jpg"
-        >
-          <v-row align="start" class="mt-md-10 mt-sm-4 pa-2 fill-height">
-            <v-col offset="1" cols="12" sm="3">
-              <h3>Bienvenido a mi página</h3>
-              <v-btn
-                nuxt
-                color="secondary"
-                class="mt-4 text-none font-weight-bold"
-              >
-                Hacer un pedido
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-img>
-      </client-only>
+      <v-img
+        :aspect-ratio="16 / 9"
+        max-height="500px"
+        src="/images/hero-banner.jpg"
+      >
+        <v-row align="start" class="mt-md-10 mt-sm-4 pa-2 fill-height">
+          <v-col offset="1" cols="12" sm="3">
+            <h3>Bienvenido a mi página</h3>
+            <v-btn
+              nuxt
+              color="secondary"
+              class="mt-4 text-none font-weight-bold"
+            >
+              Hacer un pedido
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-img>
     </v-col>
     <v-row>
       <v-col tile class="pa-0" cols="12" md="6">
@@ -78,55 +76,7 @@
               creativo
             </v-card-subtitle>
             <v-card-text>
-              <v-form
-                v-model="valid"
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                :lazy-validation="true"
-              >
-                <v-text-field
-                  outlined
-                  label="Nombre"
-                  type="text"
-                  :rules="[(v) => !!v || 'Este campo no puede estar vacío']"
-                  name="nombre"
-                  required
-                />
-                <v-text-field
-                  outlined
-                  label="Email"
-                  type="email"
-                  name="email"
-                />
-                <v-text-field
-                  outlined
-                  label="Teléfono"
-                  type="text"
-                  :rules="[(v) => !!v || 'Este campo no puede estar vacío']"
-                  name="telefono"
-                  required
-                />
-                <v-textarea
-                  outlined
-                  label="Mensaje"
-                  name="mensaje"
-                  :rules="[(v) => !!v || 'Este campo no puede estar vacío']"
-                  auto-grow
-                  rows="4"
-                  color="primary"
-                  required
-                />
-                <v-btn
-                  :right="true"
-                  color="secondary"
-                  :disabled="!valid"
-                  class="text-none px-6"
-                  type="submit"
-                >
-                  Enviar
-                </v-btn>
-              </v-form>
+              <ContactForm />
             </v-card-text>
             <v-card-actions></v-card-actions>
           </v-card>
@@ -147,8 +97,9 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { ContentfulModule } from '~/store'
 import MenuCard from '~/components/MenuCard.vue'
+import ContactForm from '~/components/ContactForm.vue'
 
-@Component({ components: { MenuCard } })
+@Component({ components: { MenuCard, ContactForm } })
 export default class IndexPage extends Vue {
   valid = true
 
@@ -179,31 +130,5 @@ export default class IndexPage extends Vue {
   height: 100px;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-.has-overlay {
-  .content {
-    &:after {
-      content: ' ';
-      position: absolute;
-      background: var(--v-accent-base);
-      background: black;
-      height: 100%;
-      width: 100%;
-      opacity: 0.5;
-      z-index: 1;
-    }
-
-    height: 100%;
-    opacity: 1;
-
-    .col {
-      z-index: 2;
-    }
-  }
 }
 </style>
