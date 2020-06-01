@@ -5,7 +5,7 @@ dotenv.config()
 
 const pageName = 'Lou De La Hoz'
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
    ** Headers of the page
    */
@@ -70,11 +70,6 @@ export default {
   markdownit: {
     injected: true
   },
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

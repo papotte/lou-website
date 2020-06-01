@@ -35,6 +35,7 @@
       name="mensaje"
       :rules="[(v) => !!v || 'Este campo no puede estar vacío']"
       auto-grow
+      value=""
       rows="4"
       color="primary"
       required
