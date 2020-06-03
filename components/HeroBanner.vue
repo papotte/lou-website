@@ -8,7 +8,11 @@
       <v-row align="start" class="mt-md-10 mt-sm-4 pa-2 fill-height">
         <v-col offset="1" cols="12" sm="3">
           <h3>Bienvenido a mi página</h3>
-          <v-btn nuxt color="secondary" class="mt-4 text-none font-weight-bold" @click="order">
+          <v-btn
+            color="secondary"
+            class="mt-4 text-none font-weight-bold"
+            to="/#products"
+          >
             Hacer un pedido
           </v-btn>
         </v-col>

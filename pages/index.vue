@@ -1,6 +1,6 @@
 <template>
   <v-col class="pa-0" cols="12">
-    <HeroBanner @order="order" />
+    <HeroBanner />
     <Profile />
     <v-container id="products">
       <v-row class="mt-11">
@@ -11,10 +11,7 @@
           md="4"
           class="px-5"
         >
-          <ProductCard
-            :card="card"
-            :image-method="getImage"
-          />
+          <ProductCard :card="card" :image-method="getImage" />
         </v-col>
       </v-row>
       <v-row id="contact" class="mt-11">
@@ -71,10 +68,6 @@ export default class IndexPage extends Vue {
 
   get latestMenus() {
     return ContentfulModule.allMenus.filter((_: any, i: number) => i < 3)
-  }
-
-  order() {
-    console.log('Make order')
   }
 
   getImage(image: { fields: { file: { url: string } } }) {

@@ -16,7 +16,7 @@
     />
     <v-spacer />
     <v-card-actions class="mb-2 justify-center">
-      <v-btn color="secondary text-none text-center">
+      <v-btn color="secondary text-none text-center" @click="handleClick">
         {{ buttonText }}
       </v-btn>
     </v-card-actions>
@@ -47,7 +47,7 @@ export default class Profile extends Vue {
 
   get description() {
     if (this.card.fields.showLatest) {
-      return this.latest.fields.productName
+      return this.latest.fields.productDescription
     }
     return this.card.fields.categoryDescription
   }
@@ -57,6 +57,13 @@ export default class Profile extends Vue {
       return 'Hacer pedido'
     }
     return 'Ver más'
+  }
+
+  handleClick() {
+    if (this.card.fields.showLatest) {
+      // TODO: Popup with order window
+    }
+    // TODO: Popup with categories
   }
 }
 </script>
