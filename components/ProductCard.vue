@@ -20,17 +20,26 @@
         {{ buttonText }}
       </v-btn>
     </v-card-actions>
+    <OrderPopup :activator.sync="openOrder" />
+    <CategoryPopup :activator.sync="openCategory" :category-id="card.sys.id" />
   </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { ContentfulModule } from '~/store'
+import OrderPopup from '~/components/OrderPopup.vue'
+import CategoryPopup from '~/components/CategoryPopup.vue'
 
-@Component
+@Component({
+  components: { CategoryPopup, OrderPopup }
+})
 export default class Profile extends Vue {
   @Prop() card!: any
   @Prop() imageMethod!: (url: string) => string
+
+  openOrder = false
+  openCategory = false
 
   get image() {
     let url = this.card.fields.image
@@ -61,9 +70,10 @@ export default class Profile extends Vue {
 
   handleClick() {
     if (this.card.fields.showLatest) {
-      // TODO: Popup with order window
+      this.openOrder = true
+    } else {
+      this.openCategory = true
     }
-    // TODO: Popup with categories
   }
 }
 </script>
