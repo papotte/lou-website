@@ -1,5 +1,4 @@
 <template>
-
   <v-form
     v-model="valid"
     name="contact"
@@ -59,8 +58,4 @@ import { Component, Vue } from 'nuxt-property-decorator'
 export default class ContactForm extends Vue {
   valid = true
 }
-</script>
-
-<style scoped>
-
-</style>
+</script>>

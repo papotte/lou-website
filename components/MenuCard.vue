@@ -4,7 +4,7 @@
       <v-img
         max-height="400px"
         :class="hover ? 'has-overlay' : ''"
-        :src="getImage(product.fields.image[0])"
+        :src="image"
         @click="hover = !hover"
       >
         <v-row class="content ma-0" :class="hover ? '' : 'hidden'">
@@ -28,10 +28,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component
 export default class MenuCard extends Vue {
   @Prop() product!: any
-
-  getImage(image: { fields: { file: { url: string } } }) {
-    return 'https:' + image.fields.file.url
-  }
+  @Prop({ type: String }) image!: string
 }
 </script>
 
