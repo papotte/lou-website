@@ -1,11 +1,13 @@
 <template>
-  <v-row id="about">
-    <v-col tile class="pa-0" cols="12" md="6">
+  <v-row id="about" class="mx-0">
+    <v-col tile class="pa-0" cols="12" md="6" order-md="first" order="last">
       <v-img height="500" src="/images/photo.jpg" />
     </v-col>
-    <v-col cols="12" md="4" offset-md="1">
-      <h2 class="mt-12 secondary--text display-3">Handmade with love</h2>
-      <p class="mt-6">
+    <v-col cols="12" md="4" offset-md="1" class="px-5 px-md-0">
+      <h2 class="mt-md-12 mt-6 secondary--text display-3">
+        Handmade with love
+      </h2>
+      <p class="mt-md-12 mt-6">
         Puedes usar este espacio para incorporar más detalles sobre tu
         empresa. Escribe sobre tu personal y los servicios que ofreces.
         Cuéntales a los visitantes la historia sobre cómo se te ocurrió la

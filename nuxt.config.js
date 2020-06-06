@@ -53,7 +53,8 @@ export default {
   plugins: [
     '~/plugins/contentful',
     '~/plugins/products',
-    '~/plugins/categories'
+    '~/plugins/categories',
+    '~/plugins/currency'
   ],
   /*
    ** Nuxt.js dev-modules

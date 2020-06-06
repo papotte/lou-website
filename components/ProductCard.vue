@@ -1,17 +1,30 @@
 <template>
-  <v-card flat tile class="border-primary d-flex flex-column" height="430px">
+  <v-card
+    flat
+    tile
+    class="border-primary d-flex flex-column"
+    min-height="430px"
+  >
     <v-img height="200px" :src="image" />
-    <v-card-title class="headline primary--text text-center">
-      <span>{{ card.fields.title }}</span>
-    </v-card-title>
-    <v-card-subtitle
-      v-if="card.fields.showLatest"
-      class="pb-0 secondary--text text-center"
-    >
+    <v-toolbar flat dense color="transparent" max-height="48px">
+      <v-toolbar-title>
+        <div class="headline primary--text">
+          {{ card.fields.title }}
+        </div>
+      </v-toolbar-title>
+      <v-spacer />
+      <v-toolbar-items v-if="card.fields.showLatest">
+        <v-list-item class="currency px-0">
+          <span>{{ latest.fields.price | currency('$') }}</span>
+        </v-list-item>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-card-subtitle v-if="card.fields.showLatest" class="py-0 secondary--text">
       {{ latest.fields.productName }}
     </v-card-subtitle>
+
     <v-card-text
-      class="card-body text--primary mt-2"
+      class="card-body text--primary mt-2 py-1"
       v-html="$md.render(description)"
     />
     <v-spacer />
@@ -86,6 +99,10 @@ export default class Profile extends Vue {
 .card-body {
   text-overflow: ellipsis;
   overflow: hidden;
+
+  .v-list-item__content {
+    padding: 0;
+  }
 }
 
 .text-center {
