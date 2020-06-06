@@ -1,4 +1,11 @@
-import { getModule, Module, Vue, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-decorator'
+import {
+  getModule,
+  Module,
+  Vue,
+  VuexAction,
+  VuexModule,
+  VuexMutation
+} from 'nuxt-property-decorator'
 import Vuex from 'vuex'
 import client, { writeClient } from '~/plugins/contentful'
 import { OrderForm } from '~/model/OrderForm'
