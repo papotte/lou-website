@@ -13,13 +13,16 @@
         </div>
       </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items v-if="card.fields.showLatest">
+      <v-toolbar-items v-if="card.fields.showLatest && latest">
         <v-list-item class="currency px-0">
-          <span>{{ latest.fields.price | currency('$') }}</span>
+          <span>{{ latest.fields.price | currency }}</span>
         </v-list-item>
       </v-toolbar-items>
     </v-toolbar>
-    <v-card-subtitle v-if="card.fields.showLatest" class="py-0 secondary--text">
+    <v-card-subtitle
+      v-if="card.fields.showLatest && latest"
+      class="py-0 secondary--text"
+    >
       {{ latest.fields.productName }}
     </v-card-subtitle>
 
@@ -63,7 +66,7 @@ export default class Profile extends Vue {
 
   get image() {
     let url = this.card.fields.image
-    if (this.card.fields.showLatest) {
+    if (this.card.fields.showLatest && this.latest) {
       url = this.latest.fields.image[0]
     }
     return url
@@ -71,11 +74,11 @@ export default class Profile extends Vue {
 
   get latest() {
     // TODO: Change for getLatest(categoryId) or similar
-    return ContentfulModule.allMenus[0]
+    return ContentfulModule.allMenus ? ContentfulModule.allMenus[0] : null
   }
 
   get description() {
-    if (this.card.fields.showLatest) {
+    if (this.card.fields.showLatest && this.latest) {
       return this.latest.fields.productDescription
     }
     return this.card.fields.categoryDescription
@@ -89,7 +92,7 @@ export default class Profile extends Vue {
   }
 
   handleClick() {
-    if (this.card.fields.showLatest) {
+    if (this.card.fields.showLatest && this.latest) {
       this.openOrder = true
     } else {
       this.openCategory = true

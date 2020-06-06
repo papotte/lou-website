@@ -18,7 +18,7 @@
     <v-text-field
       outlined
       label="Teléfono"
-      type="text"
+      type="tel"
       :rules="[(v) => !!v || 'Este campo no puede estar vacío']"
       name="telefono"
       required

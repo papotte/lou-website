@@ -1,10 +1,8 @@
-import { getModule, Getter, Module, Vue, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-decorator'
+import { getModule, Module, Vue, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-decorator'
 import Vuex from 'vuex'
-import client from '~/plugins/contentful'
-
-interface StoreType {
-  contentful: ContentfulStore
-}
+import client, { writeClient } from '~/plugins/contentful'
+import { OrderForm } from '~/model/OrderForm'
+import { StoreType } from '~/store/StoreType'
 
 Vue.use(Vuex)
 const store = new Vuex.Store<StoreType>({})
@@ -57,7 +55,6 @@ export default class ContentfulStore extends VuexModule {
         'fields.category.fields.slug[match]': 'menu',
         order: '-sys.createdAt'
       })
-      console.log(response.items[0].fields)
       if (response.items.length > 0) {
         this.updateMenu(response.items)
       }
@@ -95,6 +92,50 @@ export default class ContentfulStore extends VuexModule {
       }
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  @VuexAction({ rawError: true })
+  async addOrder(order: OrderForm) {
+    if (!writeClient) throw new Error('Contentful no está listo')
+    const client = await (
+      await writeClient.getSpace(process.env.CONTENTFUL_SPACE || '')
+    ).getEnvironment('master')
+    const product = await client.getEntry(order.productId)
+    if (product) {
+      const available = product.fields.maxAvailable['es-CO']
+      if (available < order.quantity) {
+        throw new Error(
+          'Lo sentimos, pero no hay suficiente disponibilidad en este momento'
+        )
+      }
+      product.fields.maxAvailable['es-CO'] -= order.quantity
+      const updatedProduct = await product.update()
+      const newOrder = await client.createEntry('order', {
+        fields: {
+          name: { 'es-CO': order.name },
+          phone: { 'es-CO': order.telephone },
+          address: { 'es-CO': order.address },
+          quantity: { 'es-CO': order.quantity },
+          total: { 'es-CO': order.total },
+          message: { 'es-CO': order.message },
+          acceptCondition: { 'es-CO': order.acceptCondition },
+          product: {
+            'es-CO': {
+              sys: {
+                type: 'Link',
+                linkType: 'Entry',
+                id: updatedProduct.sys.id
+              }
+            }
+          }
+        }
+      })
+      await updatedProduct.publish()
+      await newOrder.publish()
+      return newOrder
+    } else {
+      throw new Error('Lo sentimos, parece que este producto a no existe!')
     }
   }
 }

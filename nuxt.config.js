@@ -52,8 +52,7 @@ export default {
    */
   plugins: [
     '~/plugins/contentful',
-    '~/plugins/products',
-    '~/plugins/categories',
+    '~/plugins/contentful.init',
     '~/plugins/currency'
   ],
   /*
@@ -94,7 +93,7 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          success: colors.green.darken1
         }
       }
     }
