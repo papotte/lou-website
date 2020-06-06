@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="model" fullscreen>
     <v-card tile>
-      <v-form v-model="valid" :lazy-validation="false" name="order">
+      <v-form ref="form" v-model="valid" :lazy-validation="false" name="order">
         <v-toolbar class="headline" color="secondary" dark>
           <v-toolbar-title class="headline">
             Pedidos
@@ -130,7 +130,15 @@
           color="secondary"
           class="text-none"
           :disabled="!valid"
-          @click="doOrder"
+          @click="
+            () => {
+              if ($refs.form.validate()) {
+                doOrder()
+              } else {
+                valid = false
+              }
+            }
+          "
         >
           Pedir
         </v-btn>
@@ -182,8 +190,6 @@ export default class OrderPopup extends Vue {
       .then((order) => {
         this.alertType = 'success'
         this.alertText = 'Tu código de pedido es ' + order.sys.id
-        this.valid = true
-        this.form = new OrderForm()
       })
       .catch((e: Error) => {
         this.alertType = 'error'
