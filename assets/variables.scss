@@ -132,3 +132,27 @@ h6 {
 }
 
 @import '~vuetify/src/styles/styles.sass';
+
+.v-application, .v-dialog {
+  overflow-x: hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--v-secondary-base);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--v-secondary-darken1);
+}

@@ -4,7 +4,7 @@
     name="contact"
     method="POST"
     data-netlify="true"
-    :lazy-validation="true"
+    :lazy-validation="false"
   >
     <v-text-field
       outlined
@@ -14,12 +14,7 @@
       name="nombre"
       required
     />
-    <v-text-field
-      outlined
-      label="Email"
-      type="email"
-      name="email"
-    />
+    <v-text-field outlined label="Email" type="email" name="email" />
     <v-text-field
       outlined
       label="Teléfono"
@@ -56,6 +51,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class ContactForm extends Vue {
-  valid = true
+  valid = false
 }
-</script>>
+</script>
+>

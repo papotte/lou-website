@@ -5,7 +5,7 @@
     class="border-primary d-flex flex-column"
     min-height="430px"
   >
-    <v-img height="200px" :src="image" />
+    <v-img max-height="200px" :src="image | contentfulImage" />
     <v-toolbar flat dense color="transparent" max-height="48px">
       <v-toolbar-title>
         <div class="headline primary--text">
@@ -33,8 +33,16 @@
         {{ buttonText }}
       </v-btn>
     </v-card-actions>
-    <OrderPopup :activator.sync="openOrder" />
-    <CategoryPopup :activator.sync="openCategory" :category-id="card.sys.id" />
+    <OrderPopup
+      v-if="card.fields.showLatest"
+      :activator.sync="openOrder"
+      :item="latest"
+    />
+    <CategoryPopup
+      v-else
+      :activator.sync="openCategory"
+      :category-id="card.sys.id"
+    />
   </v-card>
 </template>
 
@@ -49,7 +57,6 @@ import CategoryPopup from '~/components/CategoryPopup.vue'
 })
 export default class Profile extends Vue {
   @Prop() card!: any
-  @Prop() imageMethod!: (url: string) => string
 
   openOrder = false
   openCategory = false
@@ -59,7 +66,7 @@ export default class Profile extends Vue {
     if (this.card.fields.showLatest) {
       url = this.latest.fields.image[0]
     }
-    return this.imageMethod(url)
+    return url
   }
 
   get latest() {

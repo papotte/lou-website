@@ -11,7 +11,7 @@
           md="4"
           class="px-5"
         >
-          <ProductCard :card="card" :image-method="getImage" />
+          <ProductCard :card="card" />
         </v-col>
       </v-row>
       <v-row id="contact" class="mt-11">
@@ -37,7 +37,6 @@
         v-for="product in latestMenus"
         :key="product.sys.id"
         :product="product"
-        :image="getImage(product.fields.image[0])"
       />
     </v-row>
   </v-col>
@@ -68,13 +67,6 @@ export default class IndexPage extends Vue {
 
   get latestMenus() {
     return ContentfulModule.allMenus.filter((_: any, i: number) => i < 3)
-  }
-
-  getImage(image: { fields: { file: { url: string } } }) {
-    if (image) {
-      console.log(image.fields.file.url)
-      return 'https:' + image.fields.file.url
-    }
   }
 }
 </script>

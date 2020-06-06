@@ -1,10 +1,10 @@
 <template>
-  <v-col cols="12" md="4" class="pa-0 mb-3">
+  <v-col cols="12" md="4" class="pa-0 mb-0 mb-md-3" v-if="product">
     <v-hover v-slot:default="{ hover }">
       <v-img
-        max-height="400px"
+        height="300px"
         :class="hover ? 'has-overlay' : ''"
-        :src="image"
+        :src="product.fields.image[0] | contentfulImage"
         @click="hover = !hover"
       >
         <v-row class="content ma-0" :class="hover ? '' : 'hidden'">
@@ -28,7 +28,6 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component
 export default class MenuCard extends Vue {
   @Prop() product!: any
-  @Prop({ type: String }) image!: string
 }
 </script>
 
