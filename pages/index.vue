@@ -12,7 +12,10 @@
           md="4"
           class="px-5"
         >
-          <ProductCard :card="card" />
+          <ProductCard
+            :card="card.fields.showLatest ? currentMenu : card"
+            :is-product="card.fields.showLatest"
+          />
         </v-col>
       </v-row>
       <v-row id="contact" class="mt-11">
@@ -78,7 +81,11 @@ export default class IndexPage extends Vue {
     if (allMenus) {
       return allMenus.filter((_: any, i: number) => i < 3)
     }
-    return
+    return null
+  }
+
+  get currentMenu() {
+    return ContentfulModule.allMenus ? ContentfulModule.allMenus[0] : null
   }
 }
 </script>

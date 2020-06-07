@@ -9,21 +9,18 @@
     <v-toolbar flat dense color="transparent" max-height="48px">
       <v-toolbar-title>
         <div class="headline primary--text">
-          {{ card.fields.title }}
+          {{ cardTitle }}
         </div>
       </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items v-if="card.fields.showLatest && latest">
+      <v-toolbar-items v-if="isProduct">
         <v-list-item class="currency px-0">
-          <span>{{ latest.fields.price | currency }}</span>
+          <span>{{ card.fields.price | currency }}</span>
         </v-list-item>
       </v-toolbar-items>
     </v-toolbar>
-    <v-card-subtitle
-      v-if="card.fields.showLatest && latest"
-      class="py-0 secondary--text"
-    >
-      {{ latest.fields.productName }}
+    <v-card-subtitle v-if="isProduct" class="py-0 secondary--text">
+      {{ card.fields.productName }}
     </v-card-subtitle>
 
     <v-card-text
@@ -36,11 +33,7 @@
         {{ buttonText }}
       </v-btn>
     </v-card-actions>
-    <OrderPopup
-      v-if="card.fields.showLatest"
-      :activator.sync="openOrder"
-      :item="latest"
-    />
+    <OrderPopup v-if="isProduct" :activator.sync="openOrder" :item="card" />
     <CategoryPopup
       v-else
       :activator.sync="openCategory"
@@ -51,48 +44,49 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { ContentfulModule } from '~/store'
 import OrderPopup from '~/components/OrderPopup.vue'
 import CategoryPopup from '~/components/CategoryPopup.vue'
 
 @Component({
   components: { CategoryPopup, OrderPopup }
 })
-export default class Profile extends Vue {
+export default class ProductCard extends Vue {
   @Prop() card!: any
+  @Prop({ type: Boolean }) isProduct!: boolean
 
   openOrder = false
   openCategory = false
 
   get image() {
-    let url = this.card.fields.image
-    if (this.card.fields.showLatest && this.latest) {
-      url = this.latest.fields.image[0]
+    if (Array.isArray(this.card.fields.image)) {
+      return this.card.fields.image[0]
     }
-    return url
+    return this.card.fields.image
   }
 
-  get latest() {
-    // TODO: Change for getLatest(categoryId) or similar
-    return ContentfulModule.allMenus ? ContentfulModule.allMenus[0] : null
+  get cardTitle() {
+    if (this.isProduct) {
+      return this.card.fields.category.fields.title
+    }
+    return this.card.fields.title
   }
 
   get description() {
-    if (this.card.fields.showLatest && this.latest) {
-      return this.latest.fields.productDescription
+    if (this.isProduct) {
+      return this.card.fields.productDescription
     }
     return this.card.fields.categoryDescription
   }
 
   get buttonText() {
-    if (this.card.fields.showLatest) {
+    if (this.isProduct) {
       return 'Hacer pedido'
     }
     return 'Ver más'
   }
 
   handleClick() {
-    if (this.card.fields.showLatest && this.latest) {
+    if (this.isProduct) {
       this.openOrder = true
     } else {
       this.openCategory = true
