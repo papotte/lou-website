@@ -1,11 +1,4 @@
-import {
-  getModule,
-  Module,
-  Vue,
-  VuexAction,
-  VuexModule,
-  VuexMutation
-} from 'nuxt-property-decorator'
+import { getModule, Module, Vue, VuexAction, VuexModule, VuexMutation } from 'nuxt-property-decorator'
 import Vuex from 'vuex'
 import client, { writeClient } from '~/plugins/contentful'
 import { OrderForm } from '~/model/OrderForm'
@@ -21,7 +14,6 @@ const store = new Vuex.Store<StoreType>({})
   store
 })
 export default class ContentfulStore extends VuexModule {
-  public products: any = null
   public categories: any = null
   public menus: any = null
   public images = {
@@ -33,10 +25,6 @@ export default class ContentfulStore extends VuexModule {
     return this.menus
   }
 
-  get allProducts() {
-    return this.products
-  }
-
   get allCategories() {
     return this.categories
   }
@@ -44,11 +32,6 @@ export default class ContentfulStore extends VuexModule {
   @VuexMutation
   updateMenu(products: any) {
     this.menus = products
-  }
-
-  @VuexMutation
-  updateProducts(products: any) {
-    this.products = products
   }
 
   @VuexMutation
@@ -104,20 +87,28 @@ export default class ContentfulStore extends VuexModule {
     }
   }
 
+  @VuexAction({ rawError: true })
+  async getCategory(categoryId: string) {
+    if (!client || !categoryId) return
+    return await client.getEntry(categoryId)
+  }
+
   @VuexAction
-  async getProducts() {
+  async getProducts(categoryId: string) {
     try {
       if (!client) return
       const response = await client.getEntries({
         content_type: 'product',
+        'fields.category.sys.id': categoryId,
         order: '-sys.createdAt'
       })
       if (response.items.length > 0) {
-        this.updateProducts(response.items)
+        return response.items
       }
     } catch (err) {
       console.error(err)
     }
+    return []
   }
 
   @VuexAction
@@ -138,10 +129,8 @@ export default class ContentfulStore extends VuexModule {
 
   @VuexAction({ rawError: true })
   async addOrder(order: OrderForm) {
-    if (!writeClient) throw new Error('Contentful no está listo')
-    const client = await (
-      await writeClient.getSpace(process.env.CONTENTFUL_SPACE || '')
-    ).getEnvironment('master')
+    const client = await ContentfulStore.prepareClient()
+
     const product = await client.getEntry(order.productId)
     if (product) {
       const available = product.fields.maxAvailable['es-CO']
@@ -178,6 +167,12 @@ export default class ContentfulStore extends VuexModule {
     } else {
       throw new Error('Lo sentimos, parece que este producto a no existe!')
     }
+  }
+
+  private static async prepareClient() {
+    if (!writeClient) throw new Error('Contentful no está listo')
+    const space = await writeClient.getSpace(process.env.CONTENTFUL_SPACE || '')
+    return space.getEnvironment('master')
   }
 }
 

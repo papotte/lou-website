@@ -14,7 +14,7 @@
         >
           <ProductCard
             :card="card.fields.showLatest ? currentMenu : card"
-            :is-product="card.fields.showLatest"
+            :is-product="!!card.fields.showLatest"
           />
         </v-col>
       </v-row>

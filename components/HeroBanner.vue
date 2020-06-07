@@ -2,11 +2,11 @@
   <v-col id="start" cols="12" class="pa-0">
     <v-img
       :aspect-ratio="16 / 9"
-      max-height="500px"
+      max-height="500"
       :src="image | contentfulImage({ h: 500 })"
     >
       <template v-slot:placeholder>
-        <v-skeleton-loader height="500px" type="image"></v-skeleton-loader>
+        <v-skeleton-loader min-height="500" type="image"></v-skeleton-loader>
       </template>
       <v-row align="start" class="mt-md-10 mt-sm-4 pa-2 fill-height">
         <v-col offset="1" cols="12" sm="3">
