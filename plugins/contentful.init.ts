@@ -1,9 +1,9 @@
 import { Store } from 'vuex'
 import { StoreType } from '~/store/StoreType'
 
-export default async (vue: { store: Store<StoreType> }) => {
-  await vue.store.dispatch('getCategories')
-  await vue.store.dispatch('getProducts')
-  await vue.store.dispatch('getMenu')
-  await vue.store.dispatch('getMainImages')
+export default (vue: { store: Store<StoreType> }) => {
+  vue.store.dispatch('getCategories')
+  vue.store.dispatch('getProducts')
+  vue.store.dispatch('getMenu')
+  vue.store.dispatch('getMainImages')
 }

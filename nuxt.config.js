@@ -112,7 +112,6 @@ export default {
         return [['@nuxt/babel-preset-app', { loose: true }]]
       }
     },
-    analyze: true,
     /*
      ** You can extend webpack config here
      */

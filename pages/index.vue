@@ -4,6 +4,7 @@
     <Profile />
     <v-container id="products">
       <v-row class="mt-11">
+        <v-skeleton-loader v-if="!categories" type="card" width="33vh" />
         <v-col
           v-for="card in categories"
           :key="card.sys.id"
@@ -33,6 +34,7 @@
       </v-row>
     </v-container>
     <v-row>
+      <v-skeleton-loader v-if="!latestMenus" type="image" height="300" />
       <MenuCard
         v-for="product in latestMenus"
         :key="product.sys.id"
@@ -72,7 +74,11 @@ export default class IndexPage extends Vue {
   }
 
   get latestMenus() {
-    return ContentfulModule.allMenus.filter((_: any, i: number) => i < 3)
+    const allMenus = ContentfulModule.allMenus
+    if (allMenus) {
+      return allMenus.filter((_: any, i: number) => i < 3)
+    }
+    return
   }
 }
 </script>

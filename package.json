@@ -13,10 +13,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/markdownit": "^1.2.9",
-    "@nuxtjs/pwa": "^3.0.0-0",
     "contentful": "^7.14.4",
     "contentful-management": "^5.26.6",
     "nuxt": "^2.0.0",
