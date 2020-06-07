@@ -22,7 +22,11 @@
                 </v-list-item>
                 <v-list-item>
                   <v-list-item-avatar width="80" height="80">
-                    <v-img :src="image | contentfulImage" />
+                    <v-img
+                      :src="
+                        image | contentfulImage({ h: 80, fit: 'thumb' })
+                      "
+                    />
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title class="subtitle-1 font-weight-bold">

@@ -4,7 +4,7 @@
       <v-img
         height="300px"
         :class="hover ? 'has-overlay' : ''"
-        :src="product.fields.image[0] | contentfulImage"
+        :src="product.fields.image[0] | contentfulImage({ h: 300 })"
         @click="hover = !hover"
       >
         <v-row class="content ma-0" :class="hover ? '' : 'hidden'">

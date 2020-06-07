@@ -45,11 +45,17 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { ContentfulModule } from '~/store'
-import MenuCard from '~/components/MenuCard.vue'
-import ContactForm from '~/components/ContactForm.vue'
-import HeroBanner from '~/components/HeroBanner.vue'
-import Profile from '~/components/Profile.vue'
-import ProductCard from '~/components/ProductCard.vue'
+
+const ContactForm = () =>
+  import(/* webpackChunkName: "contact" */ '~/components/ContactForm.vue')
+const HeroBanner = () =>
+  import(/* webpackChunkName: "banner" */ '~/components/HeroBanner.vue')
+const Profile = () =>
+  import(/* webpackChunkName: "profile" */ '~/components/Profile.vue')
+const ProductCard = () =>
+  import(/* webpackChunkName: "productCard" */ '~/components/ProductCard.vue')
+const MenuCard = () =>
+  import(/* webpackChunkName: "menuCard" */ '~/components/MenuCard.vue')
 
 @Component({
   components: {

@@ -42,7 +42,7 @@ export default {
     CONTENTFUL_SPACE: process.env.CONTENTFUL_SPACE,
     CONTENTFUL_ACCESSTOKEN: process.env.CONTENTFUL_ACCESSTOKEN,
     CONTENTFUL_ACCESSTOKEN_WRITE: process.env.CONTENTFUL_ACCESSTOKEN_WRITE,
-    CONTENTFUL_ENVIRONMENT: process.env.CONTENTFUL_ENVIRONMENT,
+    CONTENTFUL_ENVIRONMENT: process.env.CONTENTFUL_ENVIRONMENT
   },
   /*
    ** Global CSS
@@ -112,11 +112,15 @@ export default {
         return [['@nuxt/babel-preset-app', { loose: true }]]
       }
     },
+    analyze: true,
     /*
      ** You can extend webpack config here
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     extend(config, ctx) {
+      if (ctx.isClient) {
+        config.optimization.splitChunks.maxSize = 200000
+      }
     }
   }
 }

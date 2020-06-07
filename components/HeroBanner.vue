@@ -3,8 +3,11 @@
     <v-img
       :aspect-ratio="16 / 9"
       max-height="500px"
-      src="/images/hero-banner.jpg"
+      :src="image | contentfulImage({ h: 500 })"
     >
+      <template v-slot:placeholder>
+        <v-skeleton-loader height="500px" type="image"></v-skeleton-loader>
+      </template>
       <v-row align="start" class="mt-md-10 mt-sm-4 pa-2 fill-height">
         <v-col offset="1" cols="12" sm="3">
           <h3>Bienvenido a mi página</h3>
@@ -23,11 +26,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import { ContentfulModule } from '~/store'
 
 @Component
 export default class HeroBanner extends Vue {
   order() {
     this.$emit('order')
+  }
+
+  get image() {
+    return ContentfulModule.images.banner
   }
 }
 </script>

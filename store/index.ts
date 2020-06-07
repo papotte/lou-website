@@ -24,6 +24,10 @@ export default class ContentfulStore extends VuexModule {
   public products: any = null
   public categories: any = null
   public menus: any = null
+  public images = {
+    banner: null,
+    profile: null
+  }
 
   get allMenus() {
     return this.menus
@@ -50,6 +54,36 @@ export default class ContentfulStore extends VuexModule {
   @VuexMutation
   updateCategories(categories: any) {
     this.categories = categories
+  }
+
+  @VuexMutation
+  private setImages(images: { banner: any; profile: any }) {
+    this.images = images
+  }
+
+  @VuexAction
+  private setBanner(url: any) {
+    this.setImages({ ...this.images, banner: url })
+  }
+
+  @VuexAction
+  private setProfile(url: any) {
+    this.setImages({ ...this.images, profile: url })
+  }
+
+  @VuexAction
+  async getMainImages() {
+    const bannerId = '2mA6IGaqrJ6uCB2pIYpMv2'
+    const profileId = '6oIvrIVmZOrIFSCVlFym3l'
+    try {
+      if (!client) return
+      const bannerImage = await client.getAsset(bannerId)
+      this.setBanner(bannerImage)
+      const profileImage = await client.getAsset(profileId)
+      this.setProfile(profileImage)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   @VuexAction

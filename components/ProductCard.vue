@@ -5,7 +5,7 @@
     class="border-primary d-flex flex-column"
     min-height="430px"
   >
-    <v-img max-height="200px" :src="image | contentfulImage" />
+    <v-img max-height="200px" :src="image | contentfulImage({ h: 200 })" />
     <v-toolbar flat dense color="transparent" max-height="48px">
       <v-toolbar-title>
         <div class="headline primary--text">
